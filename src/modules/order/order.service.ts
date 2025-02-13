@@ -4,6 +4,7 @@ import httpStatus from "http-status";
 import Order from "./order.model";
 import { orderUtils } from "./order.utils";
 import { IUser } from "../user/user.interface";
+import { error } from "console";
 
 const createOrder = async (
   user: IUser,
@@ -95,36 +96,13 @@ const verifyPayment = async (order_id: string) => {
     return verifiedPayment;
   };
   
-  
-//   const updateOrder = async (orderId: string, updateData: Partial<{ status: string }>) => {
-//     const updatedOrder = await Order.findByIdAndUpdate(orderId, updateData, {
-//         new: true, 
-//         runValidators: true, 
-//     });
-
-//     if (!updatedOrder) {
-//         throw new AppError(httpStatus.NOT_FOUND, "Order not found!");
-//     }
-
-//     return updatedOrder;
-// };
-
-// const deleteOrder = async (orderId: string) => {
-//   const deletedOrder = await Order.findByIdAndDelete(orderId);
-
-//   if (!deletedOrder) {
-//       throw new AppError(httpStatus.NOT_FOUND, "Order deleted!");
-//   }
-
-//   return deletedOrder;
-// };
 
 const updateOrder = async (
   orderId: string,
   updateData: Partial<{ status: string }>
 ) => {
   if (!updateData || Object.keys(updateData).length === 0) {
-    throw new AppError(httpStatus.BAD_REQUEST, "No update data provided!");
+    throw new Error("No update data provided!");
   }
 
   const updatedOrder = await Order.findByIdAndUpdate(orderId, updateData, {
@@ -133,20 +111,20 @@ const updateOrder = async (
   });
 
   if (!updatedOrder) {
-    throw new AppError(httpStatus.NOT_FOUND, "Order not found!");
+    throw new Error("Order not found!");
   }
 
   return updatedOrder;
 };
 
 
-const deleteOrder = async (orderId: string) => {
-  const deletedOrder = await Order.findByIdAndDelete(orderId);
-
-  if (!deletedOrder) {
-    throw new AppError(httpStatus.NOT_FOUND, "Order not found!");
+const deleteOrder = async (id: string) => {
+  const order = await Order.findById(id)
+  if (!order) {
+    throw new Error("Order not found!");
   }
-
+  
+  const deletedOrder = await Order.findByIdAndDelete(id);
   return deletedOrder;
 };
 
@@ -156,5 +134,5 @@ export const orderService = {
   getOrders,
   verifyPayment,
   updateOrder,
-  deleteOrder
+  deleteOrder,
 };

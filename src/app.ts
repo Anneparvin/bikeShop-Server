@@ -21,8 +21,14 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.send('Hi Next Level Developer !');
 });
 
-//Not Found
-// app.use(notFound);
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).json({
+      success: false,
+      message: err.message || "Internal Server Error",
+  });
+});
+
 app.use(globalErrorHandler);
 
 

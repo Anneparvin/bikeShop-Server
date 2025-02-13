@@ -13,7 +13,7 @@ productRouter
 
 productRouter
 .route("/")
-  .get(auth(UserRole.admin),productController.getAllProducts)
+  .get(productController.getAllProducts)
   .post(auth(UserRole.admin),productController.createProduct)
   
 export default productRouter;

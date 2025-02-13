@@ -10,7 +10,7 @@ orderRouter.get("/verify", auth(UserRole.admin), orderController.verifyPayment);
 orderRouter
   .route("/")
   .post(auth(UserRole.admin), orderController.createOrder)
-  .get(auth(UserRole.user), orderController.getOrders);
+  .get(orderController.getOrders);
 
   
 orderRouter

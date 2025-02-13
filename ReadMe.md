@@ -20,6 +20,9 @@ Customer
   customer token
   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuYXN1amlAZXhhbXBsZS5jb20iLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE3MzkyNzMwMzEsImV4cCI6MTc0MTg2NTAzMX0.JB-FgefDMxBva8TaYDlObSwzKpD1xW3g_SdzqZL0ojc
 
-vercel
+#vercel
 https://bike-shop-server-tau.vercel.app/
-   # bikeShop-Server
+   
+   
+# bikeShop-Server
+https://github.com/Anneparvin/bikeShop-Server

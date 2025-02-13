@@ -28,6 +28,7 @@ const createOrder = catchAsync(async (req, res) => {
 
       const updateOrder = catchAsync(async (req, res) => {
         const {orderId} = req.params;
+        const status = req.body
         const updatedOrder = await orderService.updateOrder(orderId, req.body);
 
         sendResponse(res, {
@@ -38,11 +39,25 @@ const createOrder = catchAsync(async (req, res) => {
       });
 
       const deleteOrder = catchAsync(async (req, res) => {
-        const {orderId} = req.params;
-        const deletedOrder = await orderService.deleteOrder(orderId);
+        const orderId = req.params.id;
+        if (!orderId) {
+           res.status(400).json({
+              success: false,
+              message: "Order ID is required",
+          });
+      }
+
+      const deletedOrder = await orderService.deleteOrder(orderId);
+
+      if (!deletedOrder) {
+           res.status(404).json({
+              success: false,
+              message: "Order not found",
+          });
+      }
 
         sendResponse(res, {
-          statusCode: httpStatus.CREATED,
+          statusCode: httpStatus.OK,
           message: "BikeOrder deleted successfully",
           data: deletedOrder,
         });
