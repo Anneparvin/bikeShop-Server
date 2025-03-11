@@ -1,0 +1,116 @@
+[
+    {
+      "name": "Yamaha R15",
+      "brand": "Yamaha",
+      "price": 2500,
+      "model": "R15 V4",
+      "type": "Sport",
+      "description": "A powerful sports bike with a sleek design.",
+      "stock": 10,
+      "status": "Stock",
+      "isDeleted": false,
+      "bikeImage": "https://i.ibb.co.com/yBnxKMHF/bike-Image7.jpg"
+    },
+    {
+      "name": "Honda CBR500R",
+      "brand": "Honda",
+      "price": 6500,
+      "model": "CBR500R 2023",
+      "type": "Sport",
+      "description": "A mid-range sportbike with excellent performance.",
+      "stock": 5,
+      "status": "Stock",
+      "isDeleted": false,
+      "bikeImage": ""
+    },
+    {
+      "name": "Suzuki Hayabusa",
+      "brand": "Suzuki",
+      "price": 15000,
+      "model": "Hayabusa 2023",
+      "type": "Sport",
+      "description": "One of the fastest production motorcycles.",
+      "stock": 3,
+      "status": "Stock",
+      "isDeleted": false
+    },
+    {
+      "name": "Kawasaki Ninja 650",
+      "brand": "Kawasaki",
+      "price": 7500,
+      "model": "Ninja 650",
+      "type": "Sport",
+      "description": "A great choice for both beginners and experienced riders.",
+      "stock": 7,
+      "status": "Stock",
+      "isDeleted": false
+    },
+    {
+      "name": "Ducati Panigale V4",
+      "brand": "Ducati",
+      "price": 25000,
+      "model": "Panigale V4",
+      "type": "Sport",
+      "description": "A high-performance superbike with cutting-edge technology.",
+      "stock": 2,
+      "status": "Stock",
+      "isDeleted": false
+    },
+    {
+      "name": "BMW R1250GS",
+      "brand": "BMW",
+      "price": 20000,
+      "model": "R1250GS",
+      "type": "Adventure",
+      "description": "A top-tier adventure bike for long-distance touring.",
+      "stock": 4,
+      "status": "Stock",
+      "isDeleted": false
+    },
+    {
+      "name": "Royal Enfield Classic 350",
+      "brand": "Royal Enfield",
+      "price": 4500,
+      "model": "Classic 350",
+      "type": "Cruiser",
+      "description": "A retro-styled cruiser bike with modern features.",
+      "stock": 15,
+      "status": "Stock",
+      "isDeleted": false,
+      "bikeImage": "https://example.com/classic-350.jpg"
+    },
+    {
+      "name": "Harley Davidson Iron 883",
+      "brand": "Harley Davidson",
+      "price": 12000,
+      "model": "Iron 883",
+      "type": "Cruiser",
+      "description": "A legendary cruiser bike with a strong presence.",
+      "stock": 6,
+      "status": "Stock",
+      "isDeleted": false
+    },
+    {
+      "name": "Bajaj Pulsar NS200",
+      "brand": "Bajaj",
+      "price": 1800,
+      "model": "Pulsar NS200",
+      "type": "Street",
+      "description": "A stylish and powerful street bike.",
+      "stock": 12,
+      "status": "Stock",
+      "isDeleted": false
+    },
+    {
+      "name": "TVS Ntorq 125",
+      "brand": "TVS",
+      "price": 1000,
+      "model": "Ntorq 125",
+      "type": "Scooter",
+      "description": "A performance-oriented scooter with smart features.",
+      "stock": 20,
+      "status": "Stock",
+      "isDeleted": false
+    }
+  ]
+  

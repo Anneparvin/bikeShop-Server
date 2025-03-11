@@ -1,13 +1,27 @@
 import { Types } from "mongoose";
 
-export interface IOrder {
+
+export interface TOrder extends Document {
+    _id?: Types.ObjectId;
     user: Types.ObjectId;
     products: {
-      product: Types.ObjectId;
-      quantity: number;
-      price:number;
+        product: Types.ObjectId;
+        quantity: number;
     }[];
     totalPrice: number;
-    status: 'pending' | 'paid' | 'shipped' | 'delivered' | 'canceled';
-  }
-  
+    status: "Pending" | "Paid" | "Shipped" | "Completed" | "Cancelled";
+    transaction: {
+        id: string;
+        transactionStatus: string;
+        bank_status: string;
+        sp_code: string;
+        sp_message: string;
+        method: string;
+        date_time: string;
+    };
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+
+

@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IOrder } from "./order.interface";
+import { TOrder } from "./order.interface";
 
 const orderSchema = new Schema({
     user: { 
@@ -11,17 +11,13 @@ const orderSchema = new Schema({
         {
             product: { 
                 type: Schema.Types.ObjectId, 
-                ref: 'Product', 
+                ref: 'Bike', 
                 required: true 
             },
       quantity: {
          type: Number, 
         required: true
-        },
-      price: {
-         type: Number, 
-        required: true
-        },
+        }
       },
     ],
     totalPrice: { 
@@ -30,14 +26,23 @@ const orderSchema = new Schema({
     },
     status: {
          type: String, 
-         enum: ['pending', 'paid', 'shipped', 'delivered', 'canceled'], 
-         default: 'pending' },
+         enum: ['Pending', 'Paid', 'Shipped', 'Delivered', 'Canceled'], 
+         default: 'Pending' },
+    transaction: {
+            id: String,
+            transactionStatus: String,
+            bank_status: String,
+            sp_code: String,
+            sp_message: String,
+            method: String,
+            date_time: String,
+        },
   }, 
   { 
     timestamps: true 
 });
   
-const Order =model<IOrder>('Order', orderSchema);
+const Order =model<TOrder>('Order', orderSchema);
 
 export default Order;
   

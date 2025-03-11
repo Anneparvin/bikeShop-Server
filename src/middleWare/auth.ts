@@ -1,55 +1,81 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
-import config from "../config";
-import AppError from "../errors/AppError";
-import catchAsync from "../utils/catchAsync";
-import { NextFunction, Request, Response } from "express";
-import httpStatus from "http-status";
-import User from "../modules/user/user.model";
-import BlacklistedToken from "../modules/user/blacklistedToken.model";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-const auth = (...requiredRoles: string[]) => {
-    return catchAsync(async(req:Request, res:Response, next:NextFunction)=> {
+
+import httpStatus from 'http-status';
+import AppError from '../errors/AppError';
+import catchAsync from '../utils/catchAsync';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import config from '../config';
+import {UserRole}  from '../modules/user/user.constant';
+import User  from"../modules/user/user.model";
+
+const auth = (...requiredRoles: UserRole[]) => {
+    return catchAsync(async (req, res, next) => {
+
         const token = req.headers.authorization;
 
-         // checking if the token is missing
-         if(!token){
-            throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
-         }
+        // checking if the token is missing
+        if (!token) {
+            throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
+        }
 
-          // Check if token is blacklisted
-      const isBlacklisted = await BlacklistedToken.findOne({ token });
-      if (isBlacklisted) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "Token is invalid or expired!");
-      }
+        let decoded;
+
+        // checking if the given token is valid
+        try {
+            decoded = jwt.verify(
+                token,
+                config.jwt_access_secret as string,
+            ) as JwtPayload;
+        } catch (err) {
+            throw new AppError(httpStatus.UNAUTHORIZED, 'Unautorized')
+        }
+
+        // const decoded = jwt.verify(
+        //     token,
+        //     config.jwt_access_secret as string,
+        // ) as JwtPayload;
+        
+        const { role, userEmail, userId,  iat } = decoded;
+
+        // checking if the user is exist
+        const user = await User.isUserExistsByCustomId(userEmail);
+
+        // console.log(user);
+        
+
+        if (!user) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+        }
+
+        // checking if the user is already deleted
+        const isDeleted = user?.isDeleted;
+
+        if (isDeleted) {
+            throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
+        }
+
+        // checking if the user is blocked
+        const userStatus = user?.status;
+
+        if (userStatus === 'blocked') {
+            throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
+        }
+
+        // Role Checking Funtion
+        if (requiredRoles && !requiredRoles.includes(role)) {
+            throw new AppError(
+                httpStatus.UNAUTHORIZED,
+                'You are not authorized  hi!',
+            );
+        }
+
+        req.user = decoded as JwtPayload;
 
 
-          // checking if the given token is valid
-          const decoded = jwt.verify(
-            token,
-            config.jwt_access_secret as string
-          ) as JwtPayload;
+        next();
 
-          const {role, email, iat} = decoded;
-
-         // checking if the user is exist
-         const user = await User.findOne({email});
-
-         if(!user){
-            throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");  
-         }
-         
-         
-         // Check if the user has the required role
-       if(requiredRoles && !requiredRoles.includes(role)) {
-        throw new AppError(
-            httpStatus.UNAUTHORIZED,
-            "You are not authorized  hi!"  
-        );
-       } 
-
-       req.user = user;
-       next();
     });
-}
+};
 
 export default auth;

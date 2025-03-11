@@ -1,28 +1,37 @@
-import { Model } from "mongoose";
+import { Model, Types} from "mongoose";
 import { UserRole } from "./user.constant";
 
-export interface IUser {
+export interface TUser {
+    id?: Types.ObjectId;
     name: string;
     email: string;
     password: string;
     role:UserRole;
-    phone?: string;
-    address?: string;
-    city?: string;
+    status: 'in-progress' | 'blocked';
+    phone: string;
+    address: string;
+    city: string;
+    isDeleted: boolean;
+    passwordChangedAt?: Date;
   }
   
 
-  export interface IUserMethods{
-    comparePassword(candidatePassword:string) :Promise<boolean>;
-    generateToken():string;
-  }
+  export interface UserModel extends Model<TUser> {
 
-  // Create a new Model type that knows about IUserMethods...
-  type IUserModel = Model<IUser, {}, IUserMethods>;
+    isUserExistsByCustomId(email: string): Promise<TUser>;
 
-  export default IUserModel;
-  
+    getPublicUserData(userId: string): Promise<Pick<TUser, 'id' | 'name' | 'email' | 'role' | 'status' | 'isDeleted' | 'phone' | 'address'>>;
 
-  
+    //instance methods for checking if passwords are matched
+    isPasswordMatched(
+        plainTextPassword: string,
+        hashedPassword: string,
+    ): Promise<boolean>;
 
-  
+    passwordChangedAt: {
+        type: Date,
+        default: null,
+    },
+}
+
+export type TUserRole = keyof typeof UserRole;
